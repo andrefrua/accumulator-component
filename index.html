@@ -1,81 +1,30 @@
 <!doctype html>
-<html>
-
-  <head>
-		<title>My TODOs</title>
-        <link rel="stylesheet" type="text/css" href="css/styles.css" />
+<html lang="en" data-framework="backbonejs">
+	<head>
+		<meta charset="utf-8">
+		<title>Backbone.js + RequireJS • TodoMVC</title>
+		<link rel="stylesheet" href="node_modules/todomvc-common/base.css">
+		<link rel="stylesheet" href="node_modules/todomvc-app-css/index.css">
 	</head>
-
 	<body>
-
-        <div class="container">
-            <div id="menu" class="menu cf"></div>
-            <h1></h1>
-            <div id="content"></div>
-        </div>
-
-        <!-- Templates -->
-
-        <script type="text/template" id="tpl-menu">
-            <ul>
-                <li><a href="#">List</a></li>
-                <li><a href="#archive">Archive</a></li>
-                <li class="right"><a href="#new">+</a></li>
-            </ul>
-        </script>
-        <script type="text/template" id="tpl-list-item">
-            <li class="cf done-<%= done %> is-marked-<%= isMarked %>" data-index="<%= index %>" data-ismarked="<%= isMarked %>">
-                <h2>
-                    <input type="checkbox" data-status <%= doneChecked %> />
-                    <a href="javascript:void(0);" data-up>&#8593;</a>
-                    <a href="javascript:void(0);" data-down>&#8595;</a>
-                    <%= title %>
-                </h2>
-                <div class="options">
-                    <a href="#edit/<%= index %>">edit</a>
-                    <a href="javascript:void(0);" data-archive><%= archiveLink %></a>
-                    <a href="#delete/<%= index %>">delete</a>
-                </div>
-            </li>
-        </script>
-        <script type="text/template" id="tpl-list-item-done">
-            <li class="cf done-<%= done %>" data-index="<%= index %>">
-                <h2>
-                    <input type="checkbox" data-status <%= doneChecked %> />
-                    <a href="javascript:void(0);" data-up>&#8593;</a>
-                    <a href="javascript:void(0);" data-down>&#8595;</a>
-                    <%= title %>
-                </h2>
-                <div class="options">
-                    <a href="#edit/<%= index %>">edit</a>
-                    <a href="javascript:void(0);" data-archive><%= archiveLink %></a>
-                    <a href="#delete/<%= index %>">delete</a>
-                </div>
-            </li>
-        </script>
-        <script type="text/template" id="tpl-form">
-            <form>
-                <textarea><%= title %></textarea>
-                <button>save</button>
-            </form>
-        </script>
-
-        <!-- Templates -->
-
-        <script src="js/vendor/jquery-1.10.2.min.js"></script>
-        <script src="js/vendor/underscore.js"></script>
-        <script src="js/vendor/backbone.js"></script>
-        <script src="js/App.js"></script>
-        <script src="js/views/menu.js"></script>
-        <script src="js/views/list.js"></script>
-        <script src="js/views/form.js"></script>
-        <script src="js/models/ToDo.js"></script>
-        <script src="js/collections/ToDos.js"></script>
-        <script>
-            window.onload = function() {
-                app.init();
-            }
-        </script>
+		<section class="todoapp">
+			<header class="header">
+				<h1>todos</h1>
+				<input class="new-todo" placeholder="What needs to be done?" autofocus>
+			</header>
+			<section class="main">
+				<input id="toggle-all" class="toggle-all" type="checkbox">
+				<label for="toggle-all">Mark all as complete</label>
+				<ul class="todo-list"></ul>
+			</section>
+			<footer class="footer"></footer>
+		</section>
+		<footer class="info">
+			<p>Double-click to edit a todo</p>
+			<p>Written by <a href="https://github.com/tastejs/todomvc">TasteJS</a></p>
+			<p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
+		</footer>
+		<script src="node_modules/todomvc-common/base.js"></script>
+		<script data-main="js/main" src="node_modules/requirejs/require.js"></script>
 	</body>
-
 </html>

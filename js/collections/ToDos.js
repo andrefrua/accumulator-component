@@ -1,37 +1,38 @@
-app.collections.ToDos = Backbone.Collection.extend({
-	initialize: function () {
-		this.add({ title: "Learn JavaScript basics" });
-		this.add({ title: "Go to backbonejs.org" });
-		this.add({ title: "Develop a Backbone application" });
+/*global define */
+define([
+	'underscore',
+	'backbone',
+	'models/todo'
+], function (_, Backbone, Todo) {
+	'use strict';
 
-		for (let index = 0; index < 1000; index++) {
-			this.add({ title: "Todo number " + index });
-		}
-	},
-	up: function (index) {
-		if (index > 0) {
-			var tmp = this.models[index - 1];
-			this.models[index - 1] = this.models[index];
-			this.models[index] = tmp;
-			this.trigger("change");
-		}
-	},
-	down: function (index) {
-		if (index < this.models.length - 1) {
-			var tmp = this.models[index + 1];
-			this.models[index + 1] = this.models[index];
-			this.models[index] = tmp;
-			this.trigger("change");
-		}
-	},
-	archive: function (archived, index) {
-		this.models[index].set("archived", archived);
-	},
-	changeStatus: function (done, index) {
-		this.models[index].set("done", done);
-	},
-	changeMarkedStatus: function (isMarked, index) {
-		this.models[index].set("isMarked", isMarked);
-	},
-	model: app.models.ToDo
+	var TodosCollection = Backbone.Collection.extend({
+		// Reference to this collection's model.
+		model: Todo,
+
+		initialize: function () {
+
+		},
+
+		// Filter down the list of all todo items that are finished.
+		completed: function () {
+			return this.where({completed: true});
+		},
+
+		// Filter down the list to only todo items that are still not finished.
+		remaining: function () {
+			return this.where({completed: false});
+		},
+
+		// We keep the Todos in sequential order, despite being saved by unordered
+		// GUID in the database. This generates the next order number for new items.
+		nextOrder: function () {
+			return this.length ? this.last().get('order') + 1 : 1;
+		},
+
+		// Todos are sorted by their original insertion order.
+		comparator: 'order'
+	});
+
+	return new TodosCollection();
 });
