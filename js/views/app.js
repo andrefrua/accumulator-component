@@ -35,6 +35,7 @@ define([
 			this.$footer = this.$('.footer');
 			this.$main = this.$('.main');
 			this.$todoList = this.$('.todo-list');
+			this.$todoListSelected = this.$('.todo-list-selected');
 
 			this.listenTo(Todos, 'add', this.addOne);
 			this.listenTo(Todos, 'reset', this.addAll);
@@ -42,9 +43,11 @@ define([
 			this.listenTo(Todos, 'filter', this.filterAll);
 			this.listenTo(Todos, 'all', _.debounce(this.render, 0));
 
-			for (let index = 0; index < 1000; index++) {
+			// Dummy data
+			for (let index = 0; index < 10; index++) {
 				Todos.add({
-					title: "Todo " + index
+					title: "Todo " + index,
+					selected: index % 2 === 0
 				});
 			}
 		},
@@ -80,7 +83,11 @@ define([
 		// appending its element to the `<ul>`.
 		addOne: function (todo) {
 			var view = new TodoView({ model: todo });
-			this.$todoList.append(view.render().el);
+			if(todo.get('selected')) {
+				this.$todoListSelected.append(view.render().el);
+			} else {
+				this.$todoList.append(view.render().el);
+			}
 		},
 
 		// Add all items in the **Todos** collection at once.
@@ -112,7 +119,8 @@ define([
 				return;
 			}
 
-			Todos.create(this.newAttributes());
+			Todos.add(this.newAttributes());
+
 			this.$input.val('');
 		},
 

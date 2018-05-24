@@ -10,18 +10,19 @@ define([
 
 	var TodoView = Backbone.View.extend({
 
-		tagName:  'li',
+		tagName: 'li',
 
 		template: _.template(todosTemplate),
 
 		// The DOM events specific to an item.
 		events: {
-			'click .toggle':	'toggleCompleted',
-			'dblclick label':	'edit',
-			'click .destroy':	'clear',
-			'keypress .edit':	'updateOnEnter',
-			'keydown .edit':	'revertOnEscape',
-			'blur .edit':		'close'
+			'click .toggle': 'toggleCompleted',
+			'dblclick label': 'edit',
+			'click .destroy': 'clear',
+			'click .select': 'toggleSelected',
+			'keypress .edit': 'updateOnEnter',
+			'keydown .edit': 'revertOnEscape',
+			'blur .edit': 'close'
 		},
 
 		// The TodoView listens for changes to its model, re-rendering. Since there's
@@ -44,7 +45,7 @@ define([
 		},
 
 		toggleVisible: function () {
-			this.$el.toggleClass('hidden',  this.isHidden());
+			this.$el.toggleClass('hidden', this.isHidden());
 		},
 
 		isHidden: function () {
@@ -107,6 +108,11 @@ define([
 		// Remove the item, destroy the model from *localStorage* and delete its view.
 		clear: function () {
 			this.model.destroy();
+		},
+
+		// Toggle the selected propoerty
+		toggleSelected: function () {
+			this.model.toggleSelected();
 		}
 	});
 

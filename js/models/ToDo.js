@@ -10,14 +10,18 @@ define([
 		// and ensure that each todo created has `title` and `completed` keys.
 		defaults: {
 			title: '',
-			completed: false
+			completed: false,
+			selected: false,
 		},
 
 		// Toggle the `completed` state of this todo item.
 		toggle: function () {
-			this.save({
-				completed: !this.get('completed')
-			});
+			this.set('completed', !this.get('completed'));
+		},
+
+		// Toggle selected
+		toggleSelected: function() {
+			this.set('selected', !this.get('selected'));
 		}
 	});
 

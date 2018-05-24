@@ -17,9 +17,5 @@ node_modules/requirejs-text/*
 node_modules/todomvc-app-css/*
 !node_modules/todomvc-app-css/index.css
 
-node_modules/todomvc-common/*
-!node_modules/todomvc-common/base.css
-!node_modules/todomvc-common/base.js
-
 node_modules/underscore/*
 !node_modules/underscore/underscore.js
